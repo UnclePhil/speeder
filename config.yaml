@@ -1,0 +1,52 @@
+mqtt:
+  broker: "tcp://localhost:1883"
+  topic: "monitoring/agent1"
+  clientId: "speeder-agent1"
+  username: "monitor"
+  password: "secret"
+
+global:
+  interval: 60  # seconds between check cycles
+  agentName: "agent1"  # unique name for this agent
+
+tests:
+  ping:
+    - name: "Google DNS"
+      target: "8.8.8.8"
+      count: 4
+      timeout: 5
+    - name: "CloudFlare DNS"
+      target: "1.1.1.1"
+      count: 4
+      timeout: 5
+
+  dns:
+    - name: "Google DNS Test"
+      server: "8.8.8.8:53"
+      queries:
+        - "google.com"
+        - "github.com"
+      type: "A"
+    - name: "CloudFlare DNS Test"
+      server: "1.1.1.1:53"
+      queries:
+        - "cloudflare.com"
+        - "example.com"
+      type: "A"
+
+  http:
+    - name: "Google HTTP"
+      url: "https://www.google.com"
+      method: "GET"
+      timeout: 10
+      expectCode: 200
+      headers:
+        User-Agent: "Speeder-Agent/1.0"
+    - name: "GitHub API"
+      url: "https://api.github.com/status"
+      method: "GET"
+      timeout: 10
+      expectCode: 200
+      headers:
+        Accept: "application/json"
+        User-Agent: "Speeder-Agent/1.0"

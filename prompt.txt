@@ -1,0 +1,5 @@
+Tu es un spécialiste en GO, en requete ping dns et http(s)
+je voudrais créer un agent en GO pouvant tourner sous windows et sous linux.
+Celui-ci doit faire une série de tests ping, dns, http , configurable via un fichier yaml ou des variables d'environnement.
+Chaque test doit récolter des métriques de résultat et temps de réponse, le type de test et le nom de l'agent afin de simplifier l'aggrégation des résultats.
+Chaque agent doit envoyer les métriques de résultats de manière centralisée via le protocole mqtt pour etre aggrgé et analysé 
