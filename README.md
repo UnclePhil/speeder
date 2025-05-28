@@ -45,9 +45,9 @@ All metrics include these standardized fields to simplify aggregation and analys
 
 The agent publishes JSON-formatted metrics to the following MQTT topics:
 
-- `{base_topic}/ping`: Ping test results
-- `{base_topic}/dns`: DNS test results
-- `{base_topic}/http`: HTTP test results
+- `{base_topic}/{agentname}/ping`: Ping test results
+- `{base_topic}/{agentname}/dns`: DNS test results
+- `{base_topic}/{agentname}/http`: HTTP test results
 
 ### Sample Metrics
 
