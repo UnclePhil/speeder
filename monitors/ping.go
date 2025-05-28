@@ -3,6 +3,7 @@ package monitors
 import (
 	"speeder/config"
 	"time"
+	"github.com/go-ping/ping"
 )
 
 type PingResult struct {

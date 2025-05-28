@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"path/filepath"
 	"time"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
@@ -61,10 +60,13 @@ func publishResults(client mqtt.Client, topic string, results interface{}) error
 }
 
 func runMonitors(cfg *config.Config, mqttClient mqtt.Client) {
+	// Create base topic with agent name
+	baseTopic := fmt.Sprintf("%s/%s", cfg.MQTT.Topic, cfg.Global.AgentName)
+
 	// Run ping tests
 	for _, test := range cfg.Tests.Ping {
-		result := monitors.RunPingTest(test)
-		err := publishResults(mqttClient, cfg.MQTT.Topic+"/ping", result)
+		result := monitors.RunPingTest(test, cfg.Global.AgentName)
+		err := publishResults(mqttClient, baseTopic+"/ping", result)
 		if err != nil {
 			log.Printf("Error publishing ping results: %v", err)
 		}
@@ -72,8 +74,8 @@ func runMonitors(cfg *config.Config, mqttClient mqtt.Client) {
 
 	// Run DNS tests
 	for _, test := range cfg.Tests.DNS {
-		results := monitors.RunDNSTest(test)
-		err := publishResults(mqttClient, cfg.MQTT.Topic+"/dns", results)
+		results := monitors.RunDNSTest(test, cfg.Global.AgentName)
+		err := publishResults(mqttClient, baseTopic+"/dns", results)
 		if err != nil {
 			log.Printf("Error publishing DNS results: %v", err)
 		}
@@ -81,8 +83,8 @@ func runMonitors(cfg *config.Config, mqttClient mqtt.Client) {
 
 	// Run HTTP tests
 	for _, test := range cfg.Tests.HTTP {
-		result := monitors.RunHTTPTest(test)
-		err := publishResults(mqttClient, cfg.MQTT.Topic+"/http", result)
+		result := monitors.RunHTTPTest(test, cfg.Global.AgentName)
+		err := publishResults(mqttClient, baseTopic+"/http", result)
 		if err != nil {
 			log.Printf("Error publishing HTTP results: %v", err)
 		}

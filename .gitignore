@@ -1,5 +1,8 @@
 # Binaries directory
 bin/
+config.yaml
+
+
 
 # Go specific
 *.exe

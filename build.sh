@@ -7,7 +7,7 @@ mv .git .gitold
 ## prepare
 docker context use default
 ## build 
-docker run -it --rm  -v ${PWD}:/data -w /data golang:latest go build -v -o ./bin/dkdtpl   
+docker run -it --rm  -v ${PWD}:/data -w /data golang:latest go build -v -o ./bin/speeder   
 sudo chown -R $(id -u):$(id -g) ./bin 
 
 ## rollback 
